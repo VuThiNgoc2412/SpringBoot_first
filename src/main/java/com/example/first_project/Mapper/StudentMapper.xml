@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.first_project.Mapper.StudentMapper">
+
+	<resultMap type="StudentDto" id="result">
+		<result property="ID" column="ID" />
+		<result property="ID_USER" column="ID_USER" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="fullname" column="fullname" />
+		<result property="address" column="address" />
+		<result property="major" column="major" />
+		<result property="sex" column="sex" />
+		<result property="birthDay" column="birthDay" />
+	</resultMap>
+
+	<select id="findByName" parameterType="string"
+		resultType="StudentDto">
+		SELECT * FROM student
+		WHERE fullname = #{%fullname%}
+	</select>
+
+	<select id="findById" parameterType="string"
+		resultType="StudentDto" resultMap="result">
+		SELECT * FROM student
+		WHERE ID = #{ID}
+	</select>
+	
+	<select id="findByIdUser" parameterType="string"
+		resultType="StudentDto" resultMap="result">
+		SELECT * FROM student
+		WHERE ID_USER = #{ID_USER}
+	</select>
+
+	<delete id="deleteStudent" parameterType="string">
+		DELETE FROM student WHERE ID = #{ID}
+	</delete>
+
+	<select id="selectAll" resultType="StudentDto" resultMap="result">
+		SELECT * FROM student
+	</select>
+
+	<insert id="insertStudent" parameterType="StudentDto" useGeneratedKeys="true" keyProperty="ID">
+		INSERT INTO student (ID, ID_USER,email, phone, fullname, address, major, sex, birthDay)
+		VALUES (#{ID}, #{ID_USER}, #{email}, #{phone}, #{fullname}, #{address}, #{major}, #{sex}, #{birthDay})
+	</insert>
+
+	<update id="updateStudent" parameterType="StudentDto" >
+		UPDATE student
+		SET ID_USER = #{ID_USER}, email = #{email}, fullname = #{fullname}, address = #{address}, major = #{major}, sex = #{sex}, birthDay = #{birthDay}
+		WHERE ID = #{ID}
+	</update>
+</mapper>
